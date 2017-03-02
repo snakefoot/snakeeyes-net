@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SnakeEyes</RootNamespace>
     <AssemblyName>SnakeEyes</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>SnakeEyes.ico</ApplicationIcon>
     <PublishUrl>publish\</PublishUrl>
@@ -33,6 +33,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,6 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
@@ -110,6 +113,14 @@
     <ProjectReference Include="..\PerfMonProbe\PerfMonProbe.csproj">
       <Project>{370C2FCC-D490-4464-8C0F-F3018D6DAA30}</Project>
       <Name>PerfMonProbe</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PingProbe\PingProbe.csproj">
+      <Project>{0e02c78e-8358-43af-82d5-94e99d4392c0}</Project>
+      <Name>PingProbe</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PowerShellProbe\PowerShellProbe.csproj">
+      <Project>{b721631a-953a-4018-b555-5743679daba2}</Project>
+      <Name>PowerShellProbe</Name>
     </ProjectReference>
     <ProjectReference Include="..\Probe\Probe.csproj">
       <Project>{7AE76F93-A62C-4A9F-9B69-BC0F3453DB50}</Project>

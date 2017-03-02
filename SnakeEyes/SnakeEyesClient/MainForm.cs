@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SnakeEyes;
 
-namespace SnakeEyesTray
+namespace SnakeEyesClient
 {
     public partial class MainForm : Form
     {

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace SnakeEyesTray
+namespace SnakeEyesClient
 {
     internal class LogViewListener : TraceListener
     {

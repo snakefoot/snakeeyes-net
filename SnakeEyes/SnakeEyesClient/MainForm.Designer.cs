@@ -1,4 +1,4 @@
-﻿namespace SnakeEyesTray
+﻿namespace SnakeEyesClient
 {
     partial class MainForm
     {

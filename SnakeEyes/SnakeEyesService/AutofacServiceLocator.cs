@@ -2,7 +2,6 @@
 using System.Security;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Autofac;
 using Microsoft.Practices.ServiceLocation;
 
