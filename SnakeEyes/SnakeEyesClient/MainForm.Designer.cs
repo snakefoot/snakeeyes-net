@@ -116,6 +116,7 @@
             this._probeNameList.TabIndex = 1;
             this._probeNameList.UseCompatibleStateImageBehavior = false;
             this._probeNameList.View = System.Windows.Forms.View.List;
+            this._probeNameList.SelectedIndexChanged += new System.EventHandler(this._probeNameList_SelectedIndexChanged);
             this._probeNameList.DoubleClick += new System.EventHandler(this._probeNameList_DoubleClick);
             // 
             // splitContainer1

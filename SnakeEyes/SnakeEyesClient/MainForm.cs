@@ -92,9 +92,17 @@ namespace SnakeEyesClient
 
             var builder = new Autofac.Builder.ContainerBuilder();
             builder.RegisterCollection<IProbe>().As<IEnumerable<IProbe>>();
-            builder.Register<PerfMonProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(PerfMonProbe).FullName).MemberOf<IEnumerable<IProbe>>();
-            builder.Register<EventLogProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(EventLogProbe).FullName).MemberOf<IEnumerable<IProbe>>();
-            builder.Register<PingProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(PingProbe).FullName).MemberOf<IEnumerable<IProbe>>();
+            string path = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+            var dynamicProbes = ProbeTypeLoader.LoadList(typeof(IProbe), path);
+            dynamicProbes.AddRange(ProbeTypeLoader.LoadList(typeof(IProbe), System.IO.Path.Combine(path, "Probes")));
+            foreach (var probeType in dynamicProbes)
+            {
+                builder.Register(probeType).As<IProbe>().ExternallyOwned().FactoryScoped().Named(probeType.FullName).MemberOf<IEnumerable<IProbe>>();
+                //builder.Register<PerfMonProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(PerfMonProbe).FullName).MemberOf<IEnumerable<IProbe>>();
+                //builder.Register<EventLogProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(EventLogProbe).FullName).MemberOf<IEnumerable<IProbe>>();
+                //builder.Register<PingProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(PingProbe).FullName).MemberOf<IEnumerable<IProbe>>();
+            }
+
             var container = builder.Build();
             Microsoft.Practices.ServiceLocation.IServiceLocator locator = new AutofacServiceLocator(container);
 
@@ -162,15 +170,8 @@ namespace SnakeEyesClient
 
         private void _probeNameList_DoubleClick(object sender, EventArgs e)
         {
-            if (_probeNameList.SelectedItems.Count > 0)
-            {
-                if (_singleProbeEventList.Tag != null)
-                    ((ObservableCollection<ProbeEvent>)_singleProbeEventList.Tag).CollectionChanged -= SingleProbeEvents_CollectionChanged;
-                var probeEvents = _probeEvents.GetEvents(_probeNameList.SelectedItems[0].Text);
-                _singleProbeEventList.Tag = probeEvents;
-                probeEvents.CollectionChanged += SingleProbeEvents_CollectionChanged;
-                SingleProbeEvents_CollectionChanged(probeEvents, new System.Collections.Specialized.NotifyCollectionChangedEventArgs(System.Collections.Specialized.NotifyCollectionChangedAction.Reset));
-            }
+            ViewConfigForm viewConfig = new ViewConfigForm();
+            viewConfig.ShowDialog(this);
         }
 
         void SingleProbeEvents_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -212,6 +213,19 @@ namespace SnakeEyesClient
             WindowState = FormWindowState.Normal;
             Activate();
             _trayIcon.Visible = false;
+        }
+
+        private void _probeNameList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_probeNameList.SelectedItems.Count > 0)
+            {
+                if (_singleProbeEventList.Tag != null)
+                    ((ObservableCollection<ProbeEvent>)_singleProbeEventList.Tag).CollectionChanged -= SingleProbeEvents_CollectionChanged;
+                var probeEvents = _probeEvents.GetEvents(_probeNameList.SelectedItems[0].Text);
+                _singleProbeEventList.Tag = probeEvents;
+                probeEvents.CollectionChanged += SingleProbeEvents_CollectionChanged;
+                SingleProbeEvents_CollectionChanged(probeEvents, new System.Collections.Specialized.NotifyCollectionChangedEventArgs(System.Collections.Specialized.NotifyCollectionChangedAction.Reset));
+            }
         }
     }
 }

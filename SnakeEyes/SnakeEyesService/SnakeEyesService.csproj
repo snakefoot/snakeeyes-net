@@ -76,6 +76,7 @@
     <Compile Include="ForwardTraceListener.cs" />
     <Compile Include="LogTraceListener.cs" />
     <Compile Include="ProbeList.cs" />
+    <Compile Include="ProbeTypeLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

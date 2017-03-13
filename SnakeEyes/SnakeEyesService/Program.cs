@@ -133,8 +133,15 @@ namespace SnakeEyes
 
             var builder = new Autofac.Builder.ContainerBuilder();
             builder.RegisterCollection<IProbe>().As<IEnumerable<IProbe>>();
-            builder.Register<PerfMonProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(PerfMonProbe).FullName).MemberOf<IEnumerable<IProbe>>();
-            builder.Register<EventLogProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(EventLogProbe).FullName).MemberOf<IEnumerable<IProbe>>();
+            var dynamicProbes = ProbeTypeLoader.LoadList(typeof(IProbe), path);
+            dynamicProbes.AddRange(ProbeTypeLoader.LoadList(typeof(IProbe), System.IO.Path.Combine(path, "Probes")));
+            foreach (var probeType in dynamicProbes)
+            {
+                builder.Register(probeType).As<IProbe>().ExternallyOwned().FactoryScoped().Named(probeType.FullName).MemberOf<IEnumerable<IProbe>>();
+                //builder.Register<PerfMonProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(PerfMonProbe).FullName).MemberOf<IEnumerable<IProbe>>();
+                //builder.Register<EventLogProbe>().As<IProbe>().ExternallyOwned().FactoryScoped().Named(typeof(EventLogProbe).FullName).MemberOf<IEnumerable<IProbe>>();
+            }
+
             var container = builder.Build();
             Microsoft.Practices.ServiceLocation.IServiceLocator locator = new AutofacServiceLocator(container);
 
