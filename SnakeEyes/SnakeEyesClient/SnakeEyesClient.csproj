@@ -119,6 +119,10 @@
       <Project>{95542302-16b1-4e3a-9040-7ee653076c6d}</Project>
       <Name>EventLogProbe</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FileProbe\FileProbe.csproj">
+      <Project>{3f501345-c388-4a9c-b4d7-327a2bdcc62d}</Project>
+      <Name>FileProbe</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PerfMonProbe\PerfMonProbe.csproj">
       <Project>{370c2fcc-d490-4464-8c0f-f3018d6daa30}</Project>
       <Name>PerfMonProbe</Name>
