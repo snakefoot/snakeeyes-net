@@ -48,14 +48,14 @@ namespace SnakeEyes
                     Trace.WriteLine("Program Failed: " + ex.Message);
                     if (ex.InnerException != null)
                         Trace.WriteLine(ex.InnerException.Message);
-                    Trace.WriteLine(ex.StackTrace);
+                    Trace.WriteLine(ex.ToString());
                 }
                 else
                 {
                     Console.WriteLine("Program Failed: " + ex.Message);
                     if (ex.InnerException != null)
                         Console.WriteLine(ex.InnerException.Message);
-                    Console.WriteLine(ex.StackTrace);
+                    Console.WriteLine(ex.ToString());
                 }
             }
         }

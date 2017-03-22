@@ -356,7 +356,7 @@ namespace SnakeEyes
                 System.Diagnostics.Trace.WriteLine(_traceSource.Name + " failed to trace event. Check TraceListeners:");
                 foreach (TraceListener listener in _traceSource.Listeners)
                     System.Diagnostics.Trace.WriteLine(_traceSource.Name + " has listener: " + listener.Name + " (" + listener.ToString() + ")");
-                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " " + ex.StackTrace);
+                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " " + ex.ToString());
             }
         }
 

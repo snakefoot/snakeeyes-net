@@ -93,14 +93,14 @@ namespace SnakeEyes
                         Trace.WriteLine("Program Failed: " + ex.Message);
                         if (ex.InnerException != null)
                             Trace.WriteLine(ex.InnerException.Message);
-                        Trace.WriteLine(ex.StackTrace);
+                        Trace.WriteLine(ex.ToString());
                     }
                     else
                     {
                         Console.WriteLine("Program Failed: " + ex.Message);
                         if (ex.InnerException != null)
                             Console.WriteLine(ex.InnerException.Message);
-                        Console.WriteLine(ex.StackTrace);
+                        Console.WriteLine(ex.ToString());
                     }
                 }
             }
@@ -227,7 +227,7 @@ namespace SnakeEyes
                         System.Diagnostics.Trace.TraceError("Probe Failure: " + ex.Message);
                         if (ex.InnerException != null)
                             System.Diagnostics.Trace.TraceError("Probe Failure: " + ex.InnerException.Message);
-                        System.Diagnostics.Trace.WriteLine("Probe Failure: " + ex.StackTrace);
+                        System.Diagnostics.Trace.WriteLine("Probe Failure: " + ex.ToString());
 
                         probes.PollExecuted(TimeSpan.FromSeconds(5), probe);
 
@@ -247,7 +247,7 @@ namespace SnakeEyes
                 Trace.WriteLine(ex.Message);
                 if (ex.InnerException != null)
                     Trace.WriteLine(ex.InnerException.Message);
-                Trace.WriteLine(ex.StackTrace);
+                Trace.WriteLine(ex.ToString());
             }
         }
 

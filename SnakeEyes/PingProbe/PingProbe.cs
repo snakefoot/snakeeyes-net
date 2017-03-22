@@ -128,11 +128,7 @@ namespace SnakeEyes
                 long sampleCount = Math.Max(SampleCount, 1);
                 for (int i = 0; i < sampleCount; ++i)
                 {
-                    PingReply pingReply;
-                    if (_buffer != null && _pingOptions != null)
-                        pingReply = _ping.Send(IpAddress ?? HostName, (int)Timeout.TotalMilliseconds, _buffer, _pingOptions);
-                    else
-                        pingReply = _ping.Send(IpAddress ?? HostName, (int)Timeout.TotalMilliseconds);
+                    PingReply pingReply = PingPong();
 
                     if (pingReply.Status == IPStatus.Success)
                     {
@@ -167,6 +163,14 @@ namespace SnakeEyes
                 }
             }
             return ProbeFrequency;
+        }
+
+        PingReply PingPong()
+        {
+            if (_buffer != null && _pingOptions != null)
+                return _ping.Send(IpAddress ?? HostName, (int)Timeout.TotalMilliseconds, _buffer, _pingOptions);
+            else
+                return _ping.Send(IpAddress ?? HostName, (int)Timeout.TotalMilliseconds);
         }
 
         void TraceEvent(TraceEventType eventType, float value, string message)
@@ -222,7 +226,7 @@ namespace SnakeEyes
                 System.Diagnostics.Trace.WriteLine(_traceSource.Name + " failed to trace event. Check TraceListeners:");
                 foreach (TraceListener listener in _traceSource.Listeners)
                     System.Diagnostics.Trace.WriteLine(_traceSource.Name + " has listener: " + listener.Name + " (" + listener.ToString() + ")");
-                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " " + ex.StackTrace);
+                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " " + ex.ToString());
             }
         }
 
@@ -241,11 +245,16 @@ namespace SnakeEyes
                     _pingOptions = new System.Net.NetworkInformation.PingOptions(TTL, DontFragment);
                 else
                     _pingOptions = null;
+
                 _buffer = Enumerable.Repeat((byte)0x20, BufferSize).ToArray();
+
+                PingPong();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                if (writeEvent)
+                    TraceEvent(TraceEventType.Critical, 0, ex.Message);
                 if (_ping != null)
                 {
                     _ping.Dispose();

@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DelayStateFilterTest.cs" />
+    <Compile Include="EmailTraceListenerTest.cs" />
+    <Compile Include="PingProbeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +64,10 @@
     <ProjectReference Include="..\EmailTraceListener\EmailTraceListener.csproj">
       <Project>{CBDF8792-A7BF-4EF3-95D0-BD31738C5792}</Project>
       <Name>EmailTraceListener</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PingProbe\PingProbe.csproj">
+      <Project>{0e02c78e-8358-43af-82d5-94e99d4392c0}</Project>
+      <Name>PingProbe</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

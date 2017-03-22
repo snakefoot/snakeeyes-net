@@ -161,7 +161,7 @@ namespace SnakeEyesClient
                     System.Diagnostics.Trace.TraceError("Probe Failure: " + ex.Message);
                     if (ex.InnerException != null)
                         System.Diagnostics.Trace.TraceError("Probe Failure: " + ex.InnerException.Message);
-                    System.Diagnostics.Trace.WriteLine("Probe Failure: " + ex.StackTrace);
+                    System.Diagnostics.Trace.WriteLine("Probe Failure: " + ex.ToString());
 
                     _probes.PollExecuted(TimeSpan.FromSeconds(5), probe);
                 }

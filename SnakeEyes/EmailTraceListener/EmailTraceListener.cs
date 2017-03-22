@@ -65,7 +65,7 @@ namespace SnakeEyes
                     System.Diagnostics.Trace.TraceError(Name + " " + ex.Message);
                     System.Diagnostics.Trace.WriteLine(Name + " failed to replace token " + match.Value);
                     System.Diagnostics.Trace.WriteLine(Name + " " + message);
-                    System.Diagnostics.Trace.WriteLine(Name + " " + ex.StackTrace);
+                    System.Diagnostics.Trace.WriteLine(Name + " " + ex.ToString());
                 }
             }
 
@@ -234,7 +234,7 @@ namespace SnakeEyes
             {
                 System.Diagnostics.Trace.TraceError(Name + " " + e.Error.Message);
                 System.Diagnostics.Trace.WriteLine(Name + " previous smtp request failed");
-                System.Diagnostics.Trace.WriteLine(Name + " " + e.Error.StackTrace);
+                System.Diagnostics.Trace.WriteLine(Name + " " + e.Error.ToString());
             }
 
             if (!String.IsNullOrEmpty(EmailThrottleSeconds))
