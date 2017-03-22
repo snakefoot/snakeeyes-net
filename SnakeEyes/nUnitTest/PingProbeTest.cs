@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Diagnostics;
+using NUnit.Framework;
 using SnakeEyes;
 
 namespace nUnitTest
