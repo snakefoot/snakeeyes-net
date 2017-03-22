@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26206.0
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probe", "Probe\Probe.csproj", "{7AE76F93-A62C-4A9F-9B69-BC0F3453DB50}"
 EndProject
@@ -16,8 +16,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailTraceListener", "EmailTraceListener\EmailTraceListener.csproj", "{CBDF8792-A7BF-4EF3-95D0-BD31738C5792}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nUnitTest", "nUnitTest\nUnitTest.csproj", "{5D2EF407-3C14-406C-B563-69CE28115091}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnakeEyesConfig", "SnakeEyesConfig\SnakeEyesConfig.csproj", "{828F8186-5B87-4B93-A6B2-CB3938ECDA65}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnakeEyesService", "SnakeEyesService\SnakeEyesService.csproj", "{8C0D5269-6943-4F5D-90F9-F9D1A5DDB139}"
 EndProject
@@ -61,10 +59,6 @@ Global
 		{5D2EF407-3C14-406C-B563-69CE28115091}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D2EF407-3C14-406C-B563-69CE28115091}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D2EF407-3C14-406C-B563-69CE28115091}.Release|Any CPU.Build.0 = Release|Any CPU
-		{828F8186-5B87-4B93-A6B2-CB3938ECDA65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{828F8186-5B87-4B93-A6B2-CB3938ECDA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{828F8186-5B87-4B93-A6B2-CB3938ECDA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{828F8186-5B87-4B93-A6B2-CB3938ECDA65}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8C0D5269-6943-4F5D-90F9-F9D1A5DDB139}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8C0D5269-6943-4F5D-90F9-F9D1A5DDB139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C0D5269-6943-4F5D-90F9-F9D1A5DDB139}.Release|Any CPU.ActiveCfg = Release|Any CPU
