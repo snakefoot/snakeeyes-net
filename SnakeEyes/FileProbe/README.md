@@ -21,6 +21,7 @@ Here is a minimal configuration for the SnakeEyesClient:
   <ErrorLog.FileProbe>
     <add key="FileName" value="G:\Error.log"/>
     <add key="MaxFileSize" value="0"/>
+	<add key="DefaultFileSize" value="0"/>
     <add key="EventId" value="30"/>
     <add key="EventType" value="Warning"/>
     <add key="ProbeFrequency" value="10"/>
