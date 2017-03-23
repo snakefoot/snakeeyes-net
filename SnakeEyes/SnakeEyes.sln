@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probe", "Probe\Probe.csproj", "{7AE76F93-A62C-4A9F-9B69-BC0F3453DB50}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnakeEyesClient", "SnakeEyesClient\SnakeEyesClient.csproj", "{30015162-6F76-49F8-AF47-88DD49B631D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFService", "WCFService\WCFService.csproj", "{A98B7761-8D6F-44FC-AE19-C9D0F234234A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProbe", "FileProbe\FileProbe.csproj", "{3F501345-C388-4A9C-B4D7-327A2BDCC62D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{A98B7761-8D6F-44FC-AE19-C9D0F234234A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A98B7761-8D6F-44FC-AE19-C9D0F234234A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A98B7761-8D6F-44FC-AE19-C9D0F234234A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F501345-C388-4A9C-B4D7-327A2BDCC62D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F501345-C388-4A9C-B4D7-327A2BDCC62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F501345-C388-4A9C-B4D7-327A2BDCC62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F501345-C388-4A9C-B4D7-327A2BDCC62D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
