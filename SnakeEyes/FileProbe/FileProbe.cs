@@ -29,8 +29,8 @@ namespace SnakeEyes
 
         public string FileName { get; set; }
         public TimeSpan ProbeFrequency { get; set; }
-        public long MaxFileSize { get; set; }
-        public TimeSpan MaxFileAge { get; set; }
+        public long? MaxFileSize { get; set; }
+        public TimeSpan? MaxFileAge { get; set; }
         public int EventId { get; set; }
         public TraceEventType EventType { get; set; }
         public long? DefaultFileSize { get; set; }
@@ -106,20 +106,21 @@ namespace SnakeEyes
         void TraceEvent(TraceEventType eventType, long fileSize, int fileAge, string message)
         {
             long value = fileSize;
-            long maxValue = MaxFileSize;
+            long maxValue = 0;
             if (eventType == TraceEventType.Information)
             {
-                if (fileSize > MaxFileSize)
+                if (MaxFileSize.HasValue && fileSize > MaxFileSize.Value)
                 {
                     message = "FileSize is above maximum threshold";
                     eventType = EventType;
+                    maxValue = MaxFileSize.Value;
                 }
-                else if (fileAge > MaxFileAge.TotalSeconds && MaxFileAge.TotalSeconds > 0)
+                else if (MaxFileAge.HasValue && fileAge > MaxFileAge.Value.TotalSeconds)
                 {
                     message = "FileAge is above maximum threshold";
                     eventType = EventType;
                     value = fileAge;
-                    maxValue = (int)MaxFileAge.TotalSeconds;
+                    maxValue = (int)MaxFileAge.Value.TotalSeconds;
                 }
             }
 
