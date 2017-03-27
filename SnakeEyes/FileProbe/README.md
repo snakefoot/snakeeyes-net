@@ -7,15 +7,15 @@ Config options:
 | Key             | Explaination                                                             | Default |
 | --------------- | ------------------------------------------------------------------------ | ------- |
 | FileName        | Name of the file to                                                      |         |
-| MaxFileSize     | Max size (bytes) that the file is allowed to have                        |         |
-| MaxFileAge      | Max age (sec) since the last modification (mtime)                        |         |
-| DefaultFileSize | Default value for file size in case the file does not exist              |         |
-| DefaultFileAge  | Default value for time since last change in case the file does not exist |         |
+| MaxFileSize     | Max size (bytes) that the file is allowed to have                        | null    |
+| MaxFileAge      | Max age (sec) since the last modification (mtime)                        | null    |
+| DefaultFileSize | Default value for file size in case the file does not exist              | null    |
+| DefaultFileAge  | Default value for time since last change in case the file does not exist | null    |
 | ProbeFrequency  | How often shall SnakeEyes execute this test (sec)                        | 5       |
 | EventId         | ID of the event                                                          |         |
 | EventType       | Event type (of type TraceEventType)                                      | Warning |
 
-Note that an exception will be thrown if both MaxFileSize and MaxFileAge are not set and the file does not exist.
+Note will generate a Critical TraceEvent if if both DefaultFileSize and DefaultFileAge are not set and the file does not exist.
 
 Here is a minimal configuration for the SnakeEyesClient that checks if the file `C:\Error.log` is empty or does not exist:
 
