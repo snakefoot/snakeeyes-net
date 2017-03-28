@@ -105,14 +105,15 @@ namespace SnakeEyes
 
         void TraceEvent(TraceEventType eventType, long fileSize, int fileAge, string message)
         {
-            long value = fileSize;
-            long maxValue = 0;
+            long value = MaxFileSize.HasValue ? fileSize : (MaxFileAge.HasValue ? fileAge : fileSize);
+            long maxValue = MaxFileSize.HasValue ? MaxFileSize.Value : (MaxFileAge.HasValue ? (int)MaxFileAge.Value.TotalSeconds : 0);
             if (eventType == TraceEventType.Information)
             {
                 if (MaxFileSize.HasValue && fileSize > MaxFileSize.Value)
                 {
                     message = "FileSize is above maximum threshold";
                     eventType = EventType;
+                    value = fileSize;
                     maxValue = MaxFileSize.Value;
                 }
                 else if (MaxFileAge.HasValue && fileAge > MaxFileAge.Value.TotalSeconds)
