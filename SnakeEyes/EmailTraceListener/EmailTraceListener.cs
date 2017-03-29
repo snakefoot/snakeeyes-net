@@ -36,8 +36,9 @@ namespace SnakeEyes
             public string Body { get; private set; }
         };
 
-        Dictionary<string, DateTime> _bundledSources = new Dictionary<string, DateTime>();
-        List<BundledMessage> _bundledMsgs = new List<BundledMessage>();
+        readonly Dictionary<string, DateTime> _bundledSources = new Dictionary<string, DateTime>();
+        readonly List<BundledMessage> _bundledMsgs = new List<BundledMessage>();
+        readonly Regex _regexFormatString = new System.Text.RegularExpressions.Regex("{{(.*?)}}", RegexOptions.Compiled);
         volatile SmtpClient _smtpClient = null;
 
         string BuildFormatString(string formatString, string message)
@@ -46,8 +47,7 @@ namespace SnakeEyes
 
             XmlDocument xmlDoc = null;
 
-            Regex regex = new System.Text.RegularExpressions.Regex("{{(.*?)}}");
-            foreach (Match match in regex.Matches(formatString))
+            foreach (Match match in _regexFormatString.Matches(formatString))
             {
                 try
                 {
@@ -241,6 +241,20 @@ namespace SnakeEyes
             {
                 int throttleTimeSec = Int32.Parse(EmailThrottleSeconds);
                 System.Threading.Thread.Sleep(throttleTimeSec * 1000);
+            }
+
+            try
+            {
+                SmtpClient smtpClient = sender as SmtpClient;
+                if (smtpClient != null)
+                    smtpClient.Dispose();
+
+                MailMessage mailMessage = e.UserState as MailMessage;
+                if (mailMessage != null)
+                    mailMessage.Dispose();
+            }
+            catch
+            {
             }
 
             lock (_bundledSources)
