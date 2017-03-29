@@ -46,7 +46,7 @@ namespace SnakeEyes
 
             XmlDocument xmlDoc = null;
 
-            Regex regex = new System.Text.RegularExpressions.Regex("{{.*?}}");
+            Regex regex = new System.Text.RegularExpressions.Regex("{{(.*?)}}");
             foreach (Match match in regex.Matches(formatString))
             {
                 try
@@ -56,7 +56,7 @@ namespace SnakeEyes
                         xmlDoc = new XmlDocument();
                         xmlDoc.LoadXml(message);
                     }
-                    string xpath = match.Value.Substring(2, match.Value.Length - 4);
+                    string xpath = match.Groups[1].Value;
                     XmlNode xmlNode = xmlDoc.SelectSingleNode(xpath);
                     result = result.Replace(match.Value, xmlNode.InnerText);
                 }
