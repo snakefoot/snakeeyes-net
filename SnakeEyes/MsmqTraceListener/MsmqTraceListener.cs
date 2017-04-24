@@ -43,7 +43,7 @@ namespace SnakeEyes
                 MessageQueue.Create(MsmqQueueName);
             }
             MessageQueue messageQueue = new MessageQueue(MsmqQueueName);
-            messageQueue.Label = "SnakeEyesQueue";
+            messageQueue.Label = "SnakeEyesInbox";
 
             Message message = new Message()
             {
@@ -51,7 +51,7 @@ namespace SnakeEyes
                 Body = trace,
                 Formatter = new ActiveXMessageFormatter()
             };
-            messageQueue.Send(message);
+            messageQueue.Send(message, MessageQueueTransactionType.Single);
         }
     }
 }
