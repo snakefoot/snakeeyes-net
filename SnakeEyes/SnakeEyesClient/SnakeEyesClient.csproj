@@ -123,6 +123,10 @@
       <Project>{3f501345-c388-4a9c-b4d7-327a2bdcc62d}</Project>
       <Name>FileProbe</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MsmqTraceListener\MsmqTraceListener.csproj">
+      <Project>{7eb8483e-d24a-4d08-a2ef-9049224c1977}</Project>
+      <Name>MsmqTraceListener</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PerfMonProbe\PerfMonProbe.csproj">
       <Project>{370c2fcc-d490-4464-8c0f-f3018d6daa30}</Project>
       <Name>PerfMonProbe</Name>
