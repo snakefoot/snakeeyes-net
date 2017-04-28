@@ -7,6 +7,12 @@ Config options:
 | Key             | Explaination                                                             | Default |
 | --------------- | ------------------------------------------------------------------------ | ------- |
 | queueName       | Name of the queue to send the traces to                                  |         |
+| queueLabel      | The label the queue should have                                          |         |
+| formatBody      | The format of the body.                                                  |         |
+| formatLabel     | The label the queue should have                                          |         |
+
+Both `formatBody` and `formatLabel` are processed by a method that replaces `{{xpath}}` with the value of the XPATH applied on the TraceEvent message.
+If `formatBody` is not given the original trace message will be submitted.
 
 Here is a minimal configuration for the SnakeEyesService that sends the amount of free ram to the queue `SnakeEyesInbox` on the local computer:
 
@@ -42,10 +48,9 @@ Here is a minimal configuration for the SnakeEyesService that sends the amount o
 			</source>
 		</sources>
 		<sharedListeners>
-			<add type="SnakeEyes.MsmqTraceListener, MsmqTraceListener" name="MsmqEvents" queueName=".\Private$\SnakeEyesInbox">
+			<add type="SnakeEyes.MsmqTraceListener, MsmqTraceListener" name="MsmqEvents" queueName=".\Private$\SnakeEyesInbox" queueLabel="Snake Eyes Inbox">
 			</add>
 		</sharedListeners>
 	</system.diagnostics>
 </configuration>
 ```
-
