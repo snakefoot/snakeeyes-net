@@ -157,7 +157,7 @@ namespace SnakeEyes
                 return;
 
             KeyValuePair<string, string> msmqMsg = BuildMsmqMessage(source, eventType, id, message);
-            SendMessage(msmqMsg.Key, msmqMsg.Value);
+            SendMessage(msmqMsg.Value, msmqMsg.Key);
         }
 
         public override void Write(string message)
