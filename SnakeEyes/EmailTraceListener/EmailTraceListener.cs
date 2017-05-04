@@ -24,7 +24,7 @@ namespace SnakeEyes
 
         class BundledMessage
         {
-            public BundledMessage(string source, KeyValuePair<string,string> emailMsg)
+            public BundledMessage(string source, KeyValuePair<string, string> emailMsg)
             {
                 Source = source;
                 Subject = emailMsg.Key;
@@ -99,7 +99,7 @@ namespace SnakeEyes
 
         public override void TraceEvent(TraceEventCache eventCache, string source, TraceEventType eventType, int id, string message)
         {
-            if (Filter!=null && !Filter.ShouldTrace(eventCache, source, eventType, id, message, null, null, null))
+            if (Filter != null && !Filter.ShouldTrace(eventCache, source, eventType, id, message, null, null, null))
                 return;
 
             // If multiple messages comes from the source quickly, then the SMTP server might throttle us
@@ -184,43 +184,41 @@ namespace SnakeEyes
         {
             lock (_bundledSources)
             {
-                using (MailMessage msg = new MailMessage())
+                MailMessage msg = new MailMessage();
+                msg.From = new MailAddress(EmailFromAddress);
+                foreach (string s in EmailToAddress.Split(";".ToCharArray()))
                 {
-                    msg.From = new MailAddress(EmailFromAddress);
-                    foreach (string s in EmailToAddress.Split(";".ToCharArray()))
-                    {
-                        msg.To.Add(s);
-                    }
-                    if (String.IsNullOrEmpty(subject))
-                        msg.Subject = EmailFormatSubject;
-                    else
-                        msg.Subject = subject;
-
-                    msg.Body = message;
-
-                    _smtpClient = null;
-                    if (String.IsNullOrEmpty(EmailHost))
-                    {
-                        _smtpClient = new SmtpClient();    // Use <system.net><mailSettings>
-                    }
-                    else
-                    {
-                        if (String.IsNullOrEmpty(EmailPort))
-                            _smtpClient = new SmtpClient(EmailHost);
-                        else
-                            _smtpClient = new SmtpClient(EmailHost, Int32.Parse(EmailPort));
-
-                        if (String.IsNullOrEmpty(EmailUsername) && String.IsNullOrEmpty(EmailPassword))
-                            _smtpClient.UseDefaultCredentials = true;
-                        else
-                            _smtpClient.Credentials = new System.Net.NetworkCredential(EmailUsername, EmailPassword);
-                    }
-                    if (!String.IsNullOrEmpty(EmailSsl))
-                        _smtpClient.EnableSsl = true;  // Only .NET 4.0 and newer support EnableSsl in <system.net><mailSettings>
-
-                    _smtpClient.SendCompleted += new SendCompletedEventHandler(smtp_SendCompleted);
-                    _smtpClient.SendAsync(msg, msg);
+                    msg.To.Add(s);
                 }
+                if (String.IsNullOrEmpty(subject))
+                    msg.Subject = EmailFormatSubject;
+                else
+                    msg.Subject = subject;
+
+                msg.Body = message;
+
+                _smtpClient = null;
+                if (String.IsNullOrEmpty(EmailHost))
+                {
+                    _smtpClient = new SmtpClient();    // Use <system.net><mailSettings>
+                }
+                else
+                {
+                    if (String.IsNullOrEmpty(EmailPort))
+                        _smtpClient = new SmtpClient(EmailHost);
+                    else
+                        _smtpClient = new SmtpClient(EmailHost, Int32.Parse(EmailPort));
+
+                    if (String.IsNullOrEmpty(EmailUsername) && String.IsNullOrEmpty(EmailPassword))
+                        _smtpClient.UseDefaultCredentials = true;
+                    else
+                        _smtpClient.Credentials = new System.Net.NetworkCredential(EmailUsername, EmailPassword);
+                }
+                if (!String.IsNullOrEmpty(EmailSsl))
+                    _smtpClient.EnableSsl = true;  // Only .NET 4.0 and newer support EnableSsl in <system.net><mailSettings>
+
+                _smtpClient.SendCompleted += new SendCompletedEventHandler(smtp_SendCompleted);
+                _smtpClient.SendAsync(msg, msg);
             }
         }
 
@@ -277,7 +275,7 @@ namespace SnakeEyes
                         bodyBuilder.AppendLine(bundleMsg.Body);
                         _bundledSources[bundleMsg.Source] = DateTime.UtcNow;
                     }
-                    string subject = _bundledMsgs[0].Subject + String.Format(" (And {0} other events)", _bundledMsgs.Count-1);
+                    string subject = _bundledMsgs[0].Subject + String.Format(" (And {0} other events)", _bundledMsgs.Count - 1);
                     _bundledMsgs.Clear();
                     SendTraceEmail(bodyBuilder.ToString(), subject);
                 }
