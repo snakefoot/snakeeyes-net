@@ -217,7 +217,7 @@ namespace SnakeEyes
                 if (!String.IsNullOrEmpty(EmailSsl))
                     _smtpClient.EnableSsl = true;  // Only .NET 4.0 and newer support EnableSsl in <system.net><mailSettings>
 
-                _smtpClient.SendCompleted += new SendCompletedEventHandler(smtp_SendCompleted);
+                _smtpClient.SendCompleted += smtp_SendCompleted;
                 _smtpClient.SendAsync(msg, msg);
             }
         }
@@ -245,7 +245,10 @@ namespace SnakeEyes
             {
                 SmtpClient smtpClient = sender as SmtpClient;
                 if (smtpClient != null)
+                {
+                    smtpClient.SendCompleted -= smtp_SendCompleted;
                     smtpClient.Dispose();
+                }
 
                 MailMessage mailMessage = e.UserState as MailMessage;
                 if (mailMessage != null)
