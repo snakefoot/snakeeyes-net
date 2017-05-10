@@ -25,7 +25,7 @@ namespace SnakeEyes
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-            if (Array.Exists(args, delegate(string arg) { return arg == "/install" || arg == "/INSTALL"; }))
+            if (Array.Exists(args, delegate(string arg) { return arg.ToLower() == "/install"; }))
             {
                 try
                 {
@@ -45,7 +45,7 @@ namespace SnakeEyes
                 return;
             }
 
-            if (Array.Exists(args, delegate(string arg) { return arg == "/uninstall" || arg == "/UNINSTALL"; }))
+            if (Array.Exists(args, delegate(string arg) { return arg.ToLower() == "/uninstall" ; }))
             {
                 try
                 {
@@ -65,7 +65,7 @@ namespace SnakeEyes
                 return;
             }
 
-            if (Array.Exists(args, delegate(string arg) { return arg == "/service" || arg == "/SERVICE"; }))
+            if (Array.Exists(args, delegate(string arg) { return arg.ToLower() == "/service"; }))
             {
                 ServiceBase[] ServicesToRun;
 
