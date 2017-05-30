@@ -55,17 +55,20 @@ namespace SnakeEyes
 
         protected virtual MessageQueue CreateMessageQueue()
         {
-            //From Windows Service, use this code
-            if (!String.IsNullOrWhiteSpace(CreateQueue) && !MessageQueue.Exists(MsmqQueueName))
+            // From Windows Service, use this code, requires that the queue-path is on local machine
+            if (!String.IsNullOrWhiteSpace(CreateQueue))
             {
-                MessageQueue.Create(MsmqQueueName);
+                if (!MessageQueue.Exists(MsmqQueueName))
+                {
+                    var createdQueue = MessageQueue.Create(MsmqQueueName);
+                    if (!String.IsNullOrWhiteSpace(MsmqQueueLabel))
+                    {
+                        createdQueue.Label = MsmqQueueLabel;
+                    }
+                }
             }
 
             MessageQueue messageQueue = new MessageQueue(MsmqQueueName);
-            if (!String.IsNullOrWhiteSpace(CreateQueue))
-            {
-                messageQueue.Label = MsmqQueueLabel;
-            }
             return messageQueue;
         }
 
