@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Probe", "Probe\Probe.csproj", "{7AE76F93-A62C-4A9F-9B69-BC0F3453DB50}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProbe", "FileProbe\FileProbe.csproj", "{3F501345-C388-4A9C-B4D7-327A2BDCC62D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsmqTraceListener", "MsmqTraceListener\MsmqTraceListener.csproj", "{7EB8483E-D24A-4D08-A2EF-9049224C1977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnakeEyesConfig", "SnakeEyesConfig\SnakeEyesConfig.csproj", "{35E92B2B-BE74-429D-A93B-BDB39AF7711F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{7EB8483E-D24A-4D08-A2EF-9049224C1977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EB8483E-D24A-4D08-A2EF-9049224C1977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EB8483E-D24A-4D08-A2EF-9049224C1977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35E92B2B-BE74-429D-A93B-BDB39AF7711F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35E92B2B-BE74-429D-A93B-BDB39AF7711F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35E92B2B-BE74-429D-A93B-BDB39AF7711F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35E92B2B-BE74-429D-A93B-BDB39AF7711F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<examples>
+  <filters>
+    <TriggerEveryHour.Filter>
+      <description>description</description>
+      <configuration>
+        <add key="NextTriggerTime" value="3600"/>
+        <add key="DelayTriggerTime" value="0"/>
+      </configuration>
+    </TriggerEveryHour.Filter>
+  </filters>
+  <probes>
+    <DiskFreeSpacePct_C.PerfMonProbe>
+      <description>description</description>
+      <configuration>
+        <add key="CategoryName" value="LogicalDisk"/>
+        <add key="CounterName" value="% Free Space"/>
+        <add key="InstanceName" value="C:"/>
+        <add key="MinValue" value="50"/>
+        <add key="EventId" value="2"/>
+        <add key="EventType" value="Warning"/>
+        <add key="ProbeFrequency" value="900"/>
+      </configuration>
+    </DiskFreeSpacePct_C.PerfMonProbe>
+
+    <RAM_Spooler.PerfMonProbe>
+      <description>description</description>
+      <configuration>
+        <add key="CategoryName" value="Process"/>
+        <add key="CounterName" value="Private Bytes"/>
+        <add key="InstanceName" value=""/>
+        <add key="ServiceName" value="spooler"/>
+        <add key="DefaultValue" value="0"/>
+        <add key="MaxValue" value="500000000"/>
+        <add key="EventId" value="3"/>
+        <add key="EventType" value="Warning"/>
+        <add key="ProbeFrequency" value="10"/>
+      </configuration>
+    </RAM_Spooler.PerfMonProbe>
+
+    <MSMQ_TotalBytes.PerfMonProbe>
+      <description>description</description>
+      <configuration>
+        <add key="CategoryName" value="MSMQ Service"/>
+        <add key="CounterName" value="Total bytes in all queues"/>
+        <add key="MaxValue" value="858993459"/>
+        <add key="EventId" value="1"/>
+        <add key="EventType" value="Warning"/>
+        <add key="ProbeFrequency" value="10"/>
+      </configuration>
+    </MSMQ_TotalBytes.PerfMonProbe>
+
+    <MSMQ_CustomQueue.PerfMonProbe>
+      <description>description</description>
+      <configuration>
+        <add key="CategoryName" value="MSMQ Queue"/>
+        <add key="CounterName" value="Messages in Queue"/>
+        <add key="InstanceName" value="private$\Hello"/>
+        <add key="MaxValue" value="10"/>
+        <add key="DefaultValue" value="0"/>
+        <add key="EventId" value="1"/>
+        <add key="EventType" value="Warning"/>
+        <add key="ProbeFrequency" value="10"/>
+      </configuration>
+    </MSMQ_CustomQueue.PerfMonProbe>
+
+    <EventLog.EventLogProbe>
+      <description>description</description>
+      <configuration>
+        <add key="EventLogName" value="Application"/>
+        <add key="ProbeFrequency" value="30"/>
+        <add key="SnakeEyes,1" value="Error"/>
+        <add key="SnakeEyes,Error" value=""/>
+        <add key="SnakeEyes,2" value="Error"/>
+        <add key="Perflib" value="Error"/>
+      </configuration>
+    </EventLog.EventLogProbe>
+  </probes>
+
+  <listeners>
+    <EventLogEveryHour>
+      <description>description</description>
+      <configuration type="System.Diagnostics.EventLogTraceListener" name="EventLogEveryHour" initializeData="SnakeEyes" />
+    </EventLogEveryHour>
+  </listeners>
+</examples>
