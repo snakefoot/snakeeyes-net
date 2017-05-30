@@ -17,6 +17,8 @@ namespace SnakeEyes
 
         public string MessageFormatBody { get { return Attributes["formatBody"]; } }
 
+        public string CreateQueue { get { return Attributes["createQueue"]; } }
+
         protected MessageQueue MsmqQueue
         {
             get
@@ -54,13 +56,16 @@ namespace SnakeEyes
         protected virtual MessageQueue CreateMessageQueue()
         {
             //From Windows Service, use this code
-            if (!MessageQueue.Exists(MsmqQueueName))
+            if (!String.IsNullOrWhiteSpace(CreateQueue) && !MessageQueue.Exists(MsmqQueueName))
             {
                 MessageQueue.Create(MsmqQueueName);
             }
 
             MessageQueue messageQueue = new MessageQueue(MsmqQueueName);
-            messageQueue.Label = MsmqQueueLabel;
+            if (!String.IsNullOrWhiteSpace(CreateQueue))
+            {
+                messageQueue.Label = MsmqQueueLabel;
+            }
             return messageQueue;
         }
 
@@ -172,7 +177,7 @@ namespace SnakeEyes
 
         protected override string[] GetSupportedAttributes()
         {
-            return new string[] { "queueName", "queueLabel", "formatLabel", "formatBody" };
+            return new string[] { "queueName", "queueLabel", "formatLabel", "formatBody", "createQueue" };
         }
     }
 }
