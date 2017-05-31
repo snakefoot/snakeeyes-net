@@ -74,6 +74,10 @@
       <Project>{0e02c78e-8358-43af-82d5-94e99d4392c0}</Project>
       <Name>PingProbe</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Probe\Probe.csproj">
+      <Project>{7ae76f93-a62c-4a9f-9b69-bc0f3453db50}</Project>
+      <Name>Probe</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
