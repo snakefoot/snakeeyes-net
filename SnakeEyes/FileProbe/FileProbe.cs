@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -27,13 +28,30 @@ namespace SnakeEyes
     {
         TraceSource _traceSource;
 
-        public string FileName { get; set; }
+        [ConfigurationProperty("ProbeFrequency", DefaultValue = 1)]
+        [Description("Number of seconds between each probe check")]
         public TimeSpan ProbeFrequency { get; set; }
-        public long? MaxFileSize { get; set; }
-        public TimeSpan? MaxFileAge { get; set; }
+        [ConfigurationProperty("EventId")]
+        [Description("Trace EventId when probe triggers")]
         public int EventId { get; set; }
+        [ConfigurationProperty("EventType", DefaultValue = TraceEventType.Error)]
+        [Description("Trace EventType when probe triggers")]
         public TraceEventType EventType { get; set; }
+
+        [ConfigurationProperty("FileName")]
+        [Description("Path to filename to probe")]
+        public string FileName { get; set; }
+        [ConfigurationProperty("MaxFileSize", DefaultValue = 0)]
+        [Description("Number of bytes the FileSize can have before probe triggers")]
+        public long? MaxFileSize { get; set; }
+        [ConfigurationProperty("MaxFileAge", DefaultValue = 0)]
+        [Description("Number of seconds without file updates before probe triggers")]
+        public TimeSpan? MaxFileAge { get; set; }
+        [ConfigurationProperty("DefaultFileSize", DefaultValue = 0)]
+        [Description("Default FileSize in bytes when file does not exists")]
         public long? DefaultFileSize { get; set; }
+        [ConfigurationProperty("DefaultFileAge", DefaultValue = 0)]
+        [Description("Default FileAge in seconds when file does not exists")]
         public int? DefaultFileAge { get; set; }
 
         public FileProbe()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -36,13 +37,27 @@ namespace SnakeEyes
         Runspace _runspace;
         Command _runcmd;
 
-        public string ScriptFile { get; set; }
-        public string ScriptParameters { get; set; }
-        public float? MaxValue { get; set; }
-        public float? MinValue { get; set; }
+        [ConfigurationProperty("ProbeFrequency", DefaultValue = 1)]
+        [Description("Number of seconds between each probe check")]
         public TimeSpan ProbeFrequency { get; set; }
+        [ConfigurationProperty("EventId")]
+        [Description("Trace EventId when probe triggers")]
         public int EventId { get; set; }
+        [ConfigurationProperty("EventType", DefaultValue = TraceEventType.Error)]
+        [Description("Trace EventType when probe triggers")]
         public TraceEventType EventType { get; set; }
+
+        [ConfigurationProperty("ScriptFile")]
+        [Description("File path to Powershell script")]
+        public string ScriptFile { get; set; }
+        [ConfigurationProperty("ScriptParameters")]
+        [Description("Parameters to the Powershell script")]
+        public string ScriptParameters { get; set; }
+        [ConfigurationProperty("MaxValue")]
+        [Description("Trigger probe when Powershell script output is larger than value")]
+        public float? MaxValue { get; set; }
+        [Description("Trigger probe when Powershell script output is less than value")]
+        public float? MinValue { get; set; }
 
         public PowerShellProbe()
         {

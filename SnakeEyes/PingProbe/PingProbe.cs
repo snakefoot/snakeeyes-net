@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -37,17 +38,40 @@ namespace SnakeEyes
         PingOptions _pingOptions;
         byte[] _buffer;
 
-        public string HostName { get; set; }
-        public string IpAddress { get; set; }
-        public TimeSpan Timeout { get; set; }
-        public int TTL { get; set; }
-        public bool DontFragment { get; set; }
-        public int BufferSize { get; set; }
-        public int SampleCount { get; set; }
+        [ConfigurationProperty("ProbeFrequency", DefaultValue = 1)]
+        [Description("Number of seconds between each probe check")]
         public TimeSpan ProbeFrequency { get; set; }
-        public float? MaxValue { get; set; }
+        [ConfigurationProperty("EventId")]
+        [Description("Trace EventId when probe triggers")]
         public int EventId { get; set; }
+        [ConfigurationProperty("EventType", DefaultValue = TraceEventType.Error)]
+        [Description("Trace EventType when probe triggers")]
         public TraceEventType EventType { get; set; }
+
+        [ConfigurationProperty("HostName")]
+        [Description("HostName to resolve and ping")]
+        public string HostName { get; set; }
+        [ConfigurationProperty("IpAddress")]
+        [Description("IpAddress to ping")]
+        public string IpAddress { get; set; }
+        [ConfigurationProperty("Timeout", DefaultValue = 300)]
+        [Description("Timeout before ping fails in seconds")]
+        public TimeSpan Timeout { get; set; }
+        [ConfigurationProperty("TTL", DefaultValue = 128)]
+        [Description("Ping route jumps allowed")]
+        public int TTL { get; set; }
+        [ConfigurationProperty("DontFragment", DefaultValue = true)]
+        [Description("Ping Do-not-fragment")]
+        public bool DontFragment { get; set; }
+        [ConfigurationProperty("BufferSize", DefaultValue = 0)]
+        [Description("Ping BufferSize")]
+        public int BufferSize { get; set; }
+        [ConfigurationProperty("SampleCount", DefaultValue = 0)]
+        [Description("Ping Attempts to execute on each probe")]
+        public int SampleCount { get; set; }
+        [ConfigurationProperty("MaxValue", DefaultValue = 0)]
+        [Description("Max number of milliseconds in delay before probe triggers")]
+        public float? MaxValue { get; set; }
 
         public PingProbe()
         {

@@ -5,6 +5,7 @@ using System.Configuration;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Management;
 using System.Text;
 using System.Xml;
@@ -34,8 +35,15 @@ namespace SnakeEyes
 
         Dictionary<string, List<EventLogTraceEvent>> _eventFilter = new Dictionary<string, List<EventLogTraceEvent>>();
 
-        public string EventLogName { get; set; }
+        [ConfigurationProperty("ProbeFrequency", DefaultValue = 1)]
+        [Description("Number of seconds between each probe check")]
         public TimeSpan ProbeFrequency { get; set; }
+
+        [ConfigurationProperty("EventLogName", IsRequired = true)]
+        public string EventLogName { get; set; }
+        [ConfigurationProperty("Filter0")]
+        [Description("Filter format [EventLogSource,EventLogLevel,EventLogId]=[TraceLevel,TraceEventId]")]
+        public string Filter0 { get; set; }
 
         public EventLogProbe()
         {
@@ -64,34 +72,42 @@ namespace SnakeEyes
 
                 foreach (string eventFilter in config.AllKeys)
                 {
-                    if (eventFilter == "EventLogName")
+                    if (!eventFilter.StartsWith("Filter"))
                         continue;
-                    if (eventFilter == "ProbeFrequency")
+
+                    int filterIndex;
+                    if (!int.TryParse(eventFilter.Substring(6), out filterIndex) || eventFilter != ("Filter" + filterIndex.ToString()))
                         continue;
+
+                    string[] filterItems = config[eventFilter].Split('=').Select(f => f.Trim()).Where(f => !string.IsNullOrEmpty(f)).ToArray();
 
                     int eventId = -1;
                     TraceEventType eventType = 0;
-                    foreach (string traceResultItem in config[eventFilter].Split(','))
+                    if (filterItems.Length > 1)
                     {
-                        if (String.IsNullOrEmpty(traceResultItem.Trim()))
-                            continue;
+                        foreach (string filterItem in filterItems[1].Split(','))
+                        {
+                            string traceResultItem = filterItem.Trim();
+                            if (String.IsNullOrEmpty(traceResultItem))
+                                continue;
 
-                        try
-                        {
-                            eventId = Int32.Parse(traceResultItem.Trim());
-                        }
-                        catch (Exception exId)
-                        {
                             try
                             {
-                                eventType = (TraceEventType)Enum.Parse(typeof(TraceEventType), traceResultItem.Trim());
+                                eventId = Int32.Parse(traceResultItem);
                             }
-                            catch (Exception exType)
+                            catch (Exception exId)
                             {
-                                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " failed to parse " + eventFilter + "=" + config[eventFilter]);
-                                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " - " + exId.Message);
-                                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " - " + exType.Message);
-                                break;
+                                try
+                                {
+                                    eventType = (TraceEventType)Enum.Parse(typeof(TraceEventType), traceResultItem);
+                                }
+                                catch (Exception exType)
+                                {
+                                    System.Diagnostics.Trace.WriteLine(_traceSource.Name + " failed to parse " + eventFilter + "=" + config[eventFilter]);
+                                    System.Diagnostics.Trace.WriteLine(_traceSource.Name + " - " + exId.Message);
+                                    System.Diagnostics.Trace.WriteLine(_traceSource.Name + " - " + exType.Message);
+                                    break;
+                                }
                             }
                         }
                     }
@@ -99,34 +115,38 @@ namespace SnakeEyes
                     string eventLogSource = null;
                     int eventLogId = -1;
                     EventLogEntryType eventLogType = 0;
-                    foreach (string eventFilterItem in eventFilter.Split(','))
+                    if (filterItems.Length >= 1)
                     {
-                        if (eventLogSource == null)
+                        foreach (string filterItem in filterItems[0].Split(','))
                         {
-                            eventLogSource = eventFilterItem;
-                            continue;
-                        }
+                            string eventFilterItem = filterItem.Trim();
+                            if (eventLogSource == null)
+                            {
+                                eventLogSource = eventFilterItem;
+                                continue;
+                            }
 
-                        if (String.IsNullOrEmpty(eventFilterItem.Trim()))
-                            continue;
+                            if (String.IsNullOrEmpty(eventFilterItem))
+                                continue;
 
-                        try
-                        {
-                            eventLogId = Int32.Parse(eventFilterItem.Trim());
-                        }
-                        catch (Exception exId)
-                        {
                             try
                             {
-                                eventLogType = (EventLogEntryType)Enum.Parse(typeof(EventLogEntryType), eventFilterItem.Trim());
+                                eventLogId = Int32.Parse(eventFilterItem);
                             }
-                            catch (Exception exType)
+                            catch (Exception exId)
                             {
-                                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " failed to parse " + eventFilter + "=" + config[eventFilter]);
-                                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " - " + exId.Message);
-                                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " - " + exType.Message);
-                                eventLogSource = null;
-                                break;
+                                try
+                                {
+                                    eventLogType = (EventLogEntryType)Enum.Parse(typeof(EventLogEntryType), eventFilterItem);
+                                }
+                                catch (Exception exType)
+                                {
+                                    System.Diagnostics.Trace.WriteLine(_traceSource.Name + " failed to parse " + eventFilter + "=" + config[eventFilter]);
+                                    System.Diagnostics.Trace.WriteLine(_traceSource.Name + " - " + exId.Message);
+                                    System.Diagnostics.Trace.WriteLine(_traceSource.Name + " - " + exType.Message);
+                                    eventLogSource = null;
+                                    break;
+                                }
                             }
                         }
                     }

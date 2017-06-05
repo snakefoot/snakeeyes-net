@@ -5,21 +5,45 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Net.Mail;
 using System.Xml;
+using System.Configuration;
+using System.ComponentModel;
 
 namespace SnakeEyes
 {
     public class EmailTraceListener : TraceListener
     {
+        [ConfigurationProperty("host", IsRequired = true)]
+        [Description("SMTP Host Name")]
         public string EmailHost { get { return Attributes["host"]; } }
+        [ConfigurationProperty("port", DefaultValue = 25)]
+        [Description("SMTP Tcp Port Number")]
         public string EmailPort { get { return Attributes["port"]; } }
+        [ConfigurationProperty("username")]
+        [Description("SMTP Username")]
         public string EmailUsername { get { return Attributes["username"]; } }
+        [ConfigurationProperty("password")]
+        [Description("SMTP Password")]
         public string EmailPassword { get { return Attributes["password"]; } }
+        [ConfigurationProperty("toAddress")]
+        [Description("Email To-Address")]
         public string EmailToAddress { get { return Attributes["toAddress"]; } }
+        [ConfigurationProperty("fromAddress")]
+        [Description("Email From-Address")]
         public string EmailFromAddress { get { return Attributes["fromAddress"]; } }
+        [ConfigurationProperty("formatSubject")]
+        [Description("Email Subject-Format")]
         public string EmailFormatSubject { get { return Attributes["formatSubject"]; } }
+        [ConfigurationProperty("formatBody")]
+        [Description("Email Body-Format")]
         public string EmailFormatBody { get { return Attributes["formatBody"]; } }
+        [ConfigurationProperty("ssl", DefaultValue = false)]
+        [Description("SMTP SSL Enabled")]
         public string EmailSsl { get { return Attributes["ssl"]; } }
+        [ConfigurationProperty("formatBundleSource")]
+        [Description("Bundle messages from the same source into same Email")]
         public string EmailFormatBundleSource { get { return Attributes["formatBundleSource"]; } }
+        [ConfigurationProperty("throttleSeconds")]
+        [Description("Throttle interval between each Email, to allow larger bundles")]
         public string EmailThrottleSeconds { get { return Attributes["throttleSeconds"]; } }
 
         class BundledMessage

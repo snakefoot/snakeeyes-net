@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Messaging;
 using System.Text.RegularExpressions;
@@ -9,14 +11,20 @@ namespace SnakeEyes
 {
     public class MsmqTraceListener : TraceListener
     {
+        [ConfigurationProperty("queueName")]
+        [Description("MSMQ Queue Path")]
         public string MsmqQueueName { get { return Attributes["queueName"]; } }
-
+        [ConfigurationProperty("queueLabel")]
+        [Description("MSMQ Queue Label, when it should create Queue")]
         public string MsmqQueueLabel { get { return Attributes["queueLabel"]; } }
-
+        [ConfigurationProperty("formatLabel")]
+        [Description("MSMQ Message Label Format")]
         public string MessageFormatLabel { get { return Attributes["formatLabel"]; } }
-
+        [ConfigurationProperty("formatBody")]
+        [Description("MSMQ Message Body Format")]
         public string MessageFormatBody { get { return Attributes["formatBody"]; } }
-
+        [ConfigurationProperty("createQueue", DefaultValue = false)]
+        [Description("MSMQ Queue should be created, when it doesn't exist")]
         public string CreateQueue { get { return Attributes["createQueue"]; } }
 
         protected MessageQueue MsmqQueue

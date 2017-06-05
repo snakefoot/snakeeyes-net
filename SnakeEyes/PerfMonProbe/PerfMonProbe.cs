@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -35,16 +34,37 @@ namespace SnakeEyes
         PerformanceCounter _perfCounter;
         CounterSample? _prevSample;
 
-        public string CategoryName { get; set; }
-        public string CounterName { get; set; }
-        public string InstanceName { get; set; }
-        public float? MaxValue { get; set; }
-        public float? MinValue { get; set; }
+        [ConfigurationProperty("ProbeFrequency", DefaultValue = 1)]
+        [Description("Number of seconds between each probe check")]
         public TimeSpan ProbeFrequency { get; set; }
-        public string ServiceName { get; set; }
+        [ConfigurationProperty("EventId")]
+        [Description("Trace EventId when probe triggers")]
         public int EventId { get; set; }
-        public float? DefaultValue { get; set; }
+        [ConfigurationProperty("EventType", DefaultValue = TraceEventType.Error)]
+        [Description("Trace EventType when probe triggers")]
         public TraceEventType EventType { get; set; }
+
+        [ConfigurationProperty("CategoryName")]
+        [Description("Performance Counter Category Name")]
+        public string CategoryName { get; set; }
+        [ConfigurationProperty("CounterName")]
+        [Description("Performance Counter Name")]
+        public string CounterName { get; set; }
+        [ConfigurationProperty("InstanceName")]
+        [Description("Performance Counter InstanceName")]
+        public string InstanceName { get; set; }
+        [ConfigurationProperty("MaxValue", DefaultValue = 0.0)]
+        [Description("Trigger probe when counter is above limit")]
+        public float? MaxValue { get; set; }
+        [ConfigurationProperty("MinValue", DefaultValue = 0.0)]
+        [Description("Trigger probe when counter is below limit")]
+        public float? MinValue { get; set; }
+        [ConfigurationProperty("ServiceName")]
+        [Description("Lookup InstanceName from Windows Service Name")]
+        public string ServiceName { get; set; }
+        [ConfigurationProperty("DefaultValue", DefaultValue = 0.0)]
+        [Description("Default Counter Value when counter does not exists")]
+        public float? DefaultValue { get; set; }
 
         public PerfMonProbe()
         {
