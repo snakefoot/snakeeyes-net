@@ -280,8 +280,11 @@ namespace SnakeEyes
             }
             catch (Exception ex)
             {
-                StartProbe(true);
+                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " " + ex.Message);
+
                 TraceCriticalEvent(ex.Message);
+
+                StartProbe(true);
             }
             return ProbeFrequency;
         }
@@ -332,6 +335,7 @@ namespace SnakeEyes
         void TraceCriticalEvent(string message)
         {
             EventLogTraceEvent traceEvent = new EventLogTraceEvent();
+            traceEvent.Message = message;
             traceEvent.Source = _traceSource.Name;
             traceEvent.Timestamp = DateTime.Now.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
             traceEvent.MachineName = Environment.MachineName;

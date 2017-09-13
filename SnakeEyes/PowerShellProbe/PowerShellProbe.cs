@@ -152,8 +152,8 @@ namespace SnakeEyes
             }
             catch (Exception ex)
             {
-                StartProbe(true);
                 TraceEvent(TraceEventType.Critical, "", ex.Message);
+                StartProbe(true);
             }
             return ProbeFrequency;
         }
@@ -191,6 +191,8 @@ namespace SnakeEyes
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Trace.WriteLine(_traceSource.Name + " " + ex.Message);
+
                 if (writeEvent)
                     TraceEvent(TraceEventType.Critical, "", ex.Message);
                 if (_runspace != null)
