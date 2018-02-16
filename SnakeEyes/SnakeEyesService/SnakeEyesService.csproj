@@ -115,6 +115,10 @@
       <Project>{3f501345-c388-4a9c-b4d7-327a2bdcc62d}</Project>
       <Name>FileProbe</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LiveFileProbe\LiveFileProbe.csproj">
+      <Project>{8d6b62bf-fce8-4f84-b65b-fa2603df31a4}</Project>
+      <Name>LiveFileProbe</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MsmqTraceListener\MsmqTraceListener.csproj">
       <Project>{7eb8483e-d24a-4d08-a2ef-9049224c1977}</Project>
       <Name>MsmqTraceListener</Name>
