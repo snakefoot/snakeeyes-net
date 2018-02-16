@@ -135,6 +135,10 @@
       <Project>{7AE76F93-A62C-4A9F-9B69-BC0F3453DB50}</Project>
       <Name>Probe</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WcfServiceTraceListener\WcfServiceTraceListener.csproj">
+      <Project>{be987fe7-b9fd-4834-86be-c6749977ebf0}</Project>
+      <Name>WcfServiceTraceListener</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
